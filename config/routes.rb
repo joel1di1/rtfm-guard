@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 Rails.application.routes.draw do
+  resources :projects
   resources :knowledges
   get 'omniauth_sessions/create'
   get 'omniauth_sessions/destroy'

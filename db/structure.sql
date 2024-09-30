@@ -96,6 +96,143 @@ ALTER SEQUENCE public.knowledges_id_seq OWNED BY public.knowledges.id;
 
 
 --
+-- Name: matches; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.matches (
+    id bigint NOT NULL,
+    pull_request_id bigint NOT NULL,
+    knowledge_id bigint NOT NULL,
+    file_path character varying,
+    line_number integer,
+    code_snippet text,
+    created_at timestamp(6) without time zone NOT NULL,
+    updated_at timestamp(6) without time zone NOT NULL
+);
+
+
+--
+-- Name: matches_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE public.matches_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: matches_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE public.matches_id_seq OWNED BY public.matches.id;
+
+
+--
+-- Name: project_knowledges; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.project_knowledges (
+    id bigint NOT NULL,
+    project_id bigint NOT NULL,
+    knowledge_id bigint NOT NULL,
+    created_at timestamp(6) without time zone NOT NULL,
+    updated_at timestamp(6) without time zone NOT NULL
+);
+
+
+--
+-- Name: project_knowledges_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE public.project_knowledges_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: project_knowledges_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE public.project_knowledges_id_seq OWNED BY public.project_knowledges.id;
+
+
+--
+-- Name: projects; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.projects (
+    id bigint NOT NULL,
+    name character varying,
+    vcs_provider character varying,
+    vcs_identifier character varying,
+    webhook_url character varying,
+    settings jsonb,
+    user_id bigint NOT NULL,
+    created_at timestamp(6) without time zone NOT NULL,
+    updated_at timestamp(6) without time zone NOT NULL
+);
+
+
+--
+-- Name: projects_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE public.projects_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: projects_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE public.projects_id_seq OWNED BY public.projects.id;
+
+
+--
+-- Name: pull_requests; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.pull_requests (
+    id bigint NOT NULL,
+    external_id character varying,
+    branch character varying,
+    status character varying,
+    project_id bigint NOT NULL,
+    created_at timestamp(6) without time zone NOT NULL,
+    updated_at timestamp(6) without time zone NOT NULL
+);
+
+
+--
+-- Name: pull_requests_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE public.pull_requests_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: pull_requests_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE public.pull_requests_id_seq OWNED BY public.pull_requests.id;
+
+
+--
 -- Name: schema_migrations; Type: TABLE; Schema: public; Owner: -
 --
 
@@ -154,6 +291,34 @@ ALTER TABLE ONLY public.knowledges ALTER COLUMN id SET DEFAULT nextval('public.k
 
 
 --
+-- Name: matches id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.matches ALTER COLUMN id SET DEFAULT nextval('public.matches_id_seq'::regclass);
+
+
+--
+-- Name: project_knowledges id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.project_knowledges ALTER COLUMN id SET DEFAULT nextval('public.project_knowledges_id_seq'::regclass);
+
+
+--
+-- Name: projects id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.projects ALTER COLUMN id SET DEFAULT nextval('public.projects_id_seq'::regclass);
+
+
+--
+-- Name: pull_requests id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.pull_requests ALTER COLUMN id SET DEFAULT nextval('public.pull_requests_id_seq'::regclass);
+
+
+--
 -- Name: users id; Type: DEFAULT; Schema: public; Owner: -
 --
 
@@ -182,6 +347,38 @@ ALTER TABLE ONLY public.identities
 
 ALTER TABLE ONLY public.knowledges
     ADD CONSTRAINT knowledges_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: matches matches_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.matches
+    ADD CONSTRAINT matches_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: project_knowledges project_knowledges_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.project_knowledges
+    ADD CONSTRAINT project_knowledges_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: projects projects_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.projects
+    ADD CONSTRAINT projects_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: pull_requests pull_requests_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.pull_requests
+    ADD CONSTRAINT pull_requests_pkey PRIMARY KEY (id);
 
 
 --
@@ -215,6 +412,48 @@ CREATE INDEX index_knowledges_on_author_id ON public.knowledges USING btree (aut
 
 
 --
+-- Name: index_matches_on_knowledge_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_matches_on_knowledge_id ON public.matches USING btree (knowledge_id);
+
+
+--
+-- Name: index_matches_on_pull_request_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_matches_on_pull_request_id ON public.matches USING btree (pull_request_id);
+
+
+--
+-- Name: index_project_knowledges_on_knowledge_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_project_knowledges_on_knowledge_id ON public.project_knowledges USING btree (knowledge_id);
+
+
+--
+-- Name: index_project_knowledges_on_project_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_project_knowledges_on_project_id ON public.project_knowledges USING btree (project_id);
+
+
+--
+-- Name: index_projects_on_user_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_projects_on_user_id ON public.projects USING btree (user_id);
+
+
+--
+-- Name: index_pull_requests_on_project_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_pull_requests_on_project_id ON public.pull_requests USING btree (project_id);
+
+
+--
 -- Name: index_users_on_email; Type: INDEX; Schema: public; Owner: -
 --
 
@@ -237,6 +476,54 @@ ALTER TABLE ONLY public.identities
 
 
 --
+-- Name: pull_requests fk_rails_5df700b412; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.pull_requests
+    ADD CONSTRAINT fk_rails_5df700b412 FOREIGN KEY (project_id) REFERENCES public.projects(id);
+
+
+--
+-- Name: project_knowledges fk_rails_827e6133c8; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.project_knowledges
+    ADD CONSTRAINT fk_rails_827e6133c8 FOREIGN KEY (knowledge_id) REFERENCES public.knowledges(id);
+
+
+--
+-- Name: project_knowledges fk_rails_9a56d18d23; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.project_knowledges
+    ADD CONSTRAINT fk_rails_9a56d18d23 FOREIGN KEY (project_id) REFERENCES public.projects(id);
+
+
+--
+-- Name: matches fk_rails_b31bfb584f; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.matches
+    ADD CONSTRAINT fk_rails_b31bfb584f FOREIGN KEY (pull_request_id) REFERENCES public.pull_requests(id);
+
+
+--
+-- Name: projects fk_rails_b872a6760a; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.projects
+    ADD CONSTRAINT fk_rails_b872a6760a FOREIGN KEY (user_id) REFERENCES public.users(id);
+
+
+--
+-- Name: matches fk_rails_dfe19379af; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.matches
+    ADD CONSTRAINT fk_rails_dfe19379af FOREIGN KEY (knowledge_id) REFERENCES public.knowledges(id);
+
+
+--
 -- Name: knowledges fk_rails_fca3245ddb; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -251,6 +538,10 @@ ALTER TABLE ONLY public.knowledges
 SET search_path TO "$user", public;
 
 INSERT INTO "schema_migrations" (version) VALUES
+('20240930220503'),
+('20240930220408'),
+('20240930220124'),
+('20240930215805'),
 ('20240930213912'),
 ('20240930204510'),
 ('20240930204509');
