@@ -491,7 +491,7 @@ DEPENDENCIES
   omniauth-github
   omniauth-google-oauth2
   omniauth-rails_csrf_protection
-  pg (~> 1.1)
+  pg
   puma (>= 5.0)
   rails (~> 7.2.1)
   rails_ping
@@ -517,7 +517,6 @@ DEPENDENCIES
   tailwindcss-rails
   timecop
   turbo-rails
-  tzinfo-data
   web-console
 
 BUNDLED WITH
