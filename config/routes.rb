@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 Rails.application.routes.draw do
+  resources :knowledges
   get 'omniauth_sessions/create'
   get 'omniauth_sessions/destroy'
   root to: 'home#index'

@@ -59,6 +59,43 @@ ALTER SEQUENCE public.identities_id_seq OWNED BY public.identities.id;
 
 
 --
+-- Name: knowledges; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.knowledges (
+    id bigint NOT NULL,
+    regexp character varying,
+    description text,
+    documentation_link character varying,
+    impact_level integer,
+    solution_hint text,
+    path_pattern character varying,
+    created_at timestamp(6) without time zone NOT NULL,
+    updated_at timestamp(6) without time zone NOT NULL,
+    author_id bigint
+);
+
+
+--
+-- Name: knowledges_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE public.knowledges_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: knowledges_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE public.knowledges_id_seq OWNED BY public.knowledges.id;
+
+
+--
 -- Name: schema_migrations; Type: TABLE; Schema: public; Owner: -
 --
 
@@ -110,6 +147,13 @@ ALTER TABLE ONLY public.identities ALTER COLUMN id SET DEFAULT nextval('public.i
 
 
 --
+-- Name: knowledges id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.knowledges ALTER COLUMN id SET DEFAULT nextval('public.knowledges_id_seq'::regclass);
+
+
+--
 -- Name: users id; Type: DEFAULT; Schema: public; Owner: -
 --
 
@@ -130,6 +174,14 @@ ALTER TABLE ONLY public.ar_internal_metadata
 
 ALTER TABLE ONLY public.identities
     ADD CONSTRAINT identities_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: knowledges knowledges_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.knowledges
+    ADD CONSTRAINT knowledges_pkey PRIMARY KEY (id);
 
 
 --
@@ -156,6 +208,13 @@ CREATE INDEX index_identities_on_user_id ON public.identities USING btree (user_
 
 
 --
+-- Name: index_knowledges_on_author_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_knowledges_on_author_id ON public.knowledges USING btree (author_id);
+
+
+--
 -- Name: index_users_on_email; Type: INDEX; Schema: public; Owner: -
 --
 
@@ -178,12 +237,21 @@ ALTER TABLE ONLY public.identities
 
 
 --
+-- Name: knowledges fk_rails_fca3245ddb; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.knowledges
+    ADD CONSTRAINT fk_rails_fca3245ddb FOREIGN KEY (author_id) REFERENCES public.users(id);
+
+
+--
 -- PostgreSQL database dump complete
 --
 
 SET search_path TO "$user", public;
 
 INSERT INTO "schema_migrations" (version) VALUES
+('20240930213912'),
 ('20240930204510'),
 ('20240930204509');
 
