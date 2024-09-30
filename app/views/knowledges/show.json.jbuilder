@@ -1,1 +1,3 @@
-json.partial! "knowledges/knowledge", knowledge: @knowledge
+# frozen_string_literal: true
+
+json.partial! 'knowledges/knowledge', knowledge: @knowledge

@@ -1,40 +1,41 @@
+# frozen_string_literal: true
+
 require 'rails_helper'
 
-RSpec.describe "knowledges/edit", type: :view do
-  let(:knowledge) {
+RSpec.describe 'knowledges/edit' do
+  let(:knowledge) do
     Knowledge.create!(
-      regexp: "MyString",
+      regexp: 'MyString',
       user: nil,
-      description: "MyText",
-      documentation_link: "MyString",
+      description: 'MyText',
+      documentation_link: 'MyString',
       impact_level: 1,
-      solution_hint: "MyText",
-      path_pattern: "MyString"
+      solution_hint: 'MyText',
+      path_pattern: 'MyString'
     )
-  }
+  end
 
-  before(:each) do
+  before do
     assign(:knowledge, knowledge)
   end
 
-  it "renders the edit knowledge form" do
+  it 'renders the edit knowledge form' do
     render
 
-    assert_select "form[action=?][method=?]", knowledge_path(knowledge), "post" do
+    assert_select 'form[action=?][method=?]', knowledge_path(knowledge), 'post' do
+      assert_select 'input[name=?]', 'knowledge[regexp]'
 
-      assert_select "input[name=?]", "knowledge[regexp]"
+      assert_select 'input[name=?]', 'knowledge[user_id]'
 
-      assert_select "input[name=?]", "knowledge[user_id]"
+      assert_select 'textarea[name=?]', 'knowledge[description]'
 
-      assert_select "textarea[name=?]", "knowledge[description]"
+      assert_select 'input[name=?]', 'knowledge[documentation_link]'
 
-      assert_select "input[name=?]", "knowledge[documentation_link]"
+      assert_select 'input[name=?]', 'knowledge[impact_level]'
 
-      assert_select "input[name=?]", "knowledge[impact_level]"
+      assert_select 'textarea[name=?]', 'knowledge[solution_hint]'
 
-      assert_select "textarea[name=?]", "knowledge[solution_hint]"
-
-      assert_select "input[name=?]", "knowledge[path_pattern]"
+      assert_select 'input[name=?]', 'knowledge[path_pattern]'
     end
   end
 end
