@@ -135,6 +135,8 @@ GEM
     globalid (1.2.1)
       activesupport (>= 6.1)
     hashie (5.0.0)
+    heroicon (1.0.0)
+      rails (>= 5.2)
     hotwire-livereload (1.4.1)
       actioncable (>= 6.0.0)
       listen (>= 3.0.0)
@@ -390,6 +392,9 @@ GEM
     simple_form (5.3.1)
       actionpack (>= 5.2)
       activemodel (>= 5.2)
+    simple_form_tailwind_css (1.0.0)
+      heroicon
+      simple_form
     simplecov (0.22.0)
       docile (~> 1.1)
       simplecov-html (~> 0.11)
@@ -509,6 +514,7 @@ DEPENDENCIES
   selenium-webdriver
   shoulda-matchers
   simple_form
+  simple_form_tailwind_css
   simplecov
   simplecov_json_formatter
   slim-rails
