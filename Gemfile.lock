@@ -219,6 +219,9 @@ GEM
     omniauth-github (2.0.1)
       omniauth (~> 2.0)
       omniauth-oauth2 (~> 1.8)
+    omniauth-gitlab (4.1.0)
+      omniauth (~> 2.0)
+      omniauth-oauth2 (~> 1.8.0)
     omniauth-google-oauth2 (1.2.0)
       jwt (>= 2.9)
       oauth2 (~> 2.0)
@@ -494,6 +497,7 @@ DEPENDENCIES
   kredis
   omniauth
   omniauth-github
+  omniauth-gitlab
   omniauth-google-oauth2
   omniauth-rails_csrf_protection
   pg
