@@ -160,7 +160,7 @@ GEM
     jbuilder (2.14.1)
       actionview (>= 7.0.0)
       activesupport (>= 7.0.0)
-    json (2.15.1)
+    json (2.15.2)
     jwt (2.10.1)
       base64
     kredis (1.8.0)
@@ -431,9 +431,9 @@ GEM
       websocket (~> 1.0)
     shoulda-matchers (6.5.0)
       activesupport (>= 5.2.0)
-    simple_form (5.3.1)
-      actionpack (>= 5.2)
-      activemodel (>= 5.2)
+    simple_form (5.4.0)
+      actionpack (>= 7.0)
+      activemodel (>= 7.0)
     simple_form_tailwind_css (1.0.0)
       heroicon
       simple_form
