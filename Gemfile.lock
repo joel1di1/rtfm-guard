@@ -401,7 +401,7 @@ GEM
       rubocop (>= 1.72)
       rubocop-performance (>= 1.24)
       rubocop-rails (>= 2.30)
-    rubocop-rails_config (1.17.2)
+    rubocop-rails_config (1.17.3)
       rubocop (>= 1.72.2)
       rubocop-ast (>= 1.38.0)
       rubocop-md
